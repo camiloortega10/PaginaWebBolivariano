@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Panel - Colegio Bolivariano</title>
+  <link rel="stylesheet" href="css/variables.css" />
+  <link rel="stylesheet" href="css/main.css" />
+  <link rel="stylesheet" href="css/components.css" />
+  <link rel="stylesheet" href="css/dashboard.css" />
+</head>
+<body class="dashboard">
+
+  <header class="dashboard__header">
+    <div class="contenedor navbar">
+      <a href="index.html" class="navbar__logo">
+        <img src="assets/img/logo.jpg" alt="" onerror="this.style.display='none'" />
+        <span>Colegio Bolivariano</span>
+      </a>
+      <div class="dashboard__user">
+        <div>
+          <strong id="userNombre">—</strong>
+          <span id="userRol" class="badge">—</span>
+        </div>
+        <button class="btn btn--blanco btn--sm" onclick="Auth.logout()">Salir</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="contenedor dashboard__grid">
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+      <button class="sidebar__item activo" data-panel="inicio">🏠 Inicio</button>
+      <button class="sidebar__item" data-panel="materias">📚 Materias</button>
+      <button class="sidebar__item" data-panel="usuarios" id="menuUsuarios" style="display:none;">👥 Usuarios</button>
+      <button class="sidebar__item" data-panel="cuestionarios" id="menuCuestionarios" style="display:none;">📝 Cuestionarios</button>
+      <button class="sidebar__item" data-panel="perfil">👤 Mi perfil</button>
+    </aside>
+
+    <!-- CONTENIDO -->
+    <section>
+      <!-- PANEL: INICIO -->
+      <div class="panel activo" id="panel-inicio">
+        <div class="panel__titulo">
+          <h2>Bienvenido, <span id="saludoNombre"></span> 👋</h2>
+        </div>
+        <div class="panel__card">
+          <h3>Resumen del sistema</h3>
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:1rem;margin-top:1rem;">
+            <div class="panel__card" style="margin:0;text-align:center;">
+              <div style="font-size:2rem;font-weight:800;color:var(--azul-oscuro);" id="statMaterias">0</div>
+              <div style="font-size:.85rem;color:var(--gris-texto);">Materias</div>
+            </div>
+            <div class="panel__card" style="margin:0;text-align:center;">
+              <div style="font-size:2rem;font-weight:800;color:var(--azul-oscuro);" id="statUsuarios">0</div>
+              <div style="font-size:.85rem;color:var(--gris-texto);">Usuarios</div>
+            </div>
+            <div class="panel__card" style="margin:0;text-align:center;">
+              <div style="font-size:2rem;font-weight:800;color:var(--azul-oscuro);" id="statProfesores">0</div>
+              <div style="font-size:.85rem;color:var(--gris-texto);">Profesores</div>
+            </div>
+            <div class="panel__card" style="margin:0;text-align:center;">
+              <div style="font-size:2rem;font-weight:800;color:var(--azul-oscuro);" id="statEstudiantes">0</div>
+              <div style="font-size:.85rem;color:var(--gris-texto);">Estudiantes</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PANEL: MATERIAS -->
+      <div class="panel" id="panel-materias">
+        <div class="panel__titulo">
+          <h2>Materias</h2>
+          <button class="btn btn--primario" id="btnNuevaMateria" style="display:none;">+ Nueva materia</button>
+        </div>
+        <div id="listaMateriasDashboard" class="grid-materias"></div>
+      </div>
+
+      <!-- PANEL: USUARIOS (solo admin) -->
+      <div class="panel" id="panel-usuarios">
+        <div class="panel__titulo">
+          <h2>Gestión de Usuarios</h2>
+          <button class="btn btn--primario" id="btnNuevoUsuario">+ Nuevo usuario</button>
+        </div>
+        <div id="tablaUsuarios"></div>
+      </div>
+
+      <!-- PANEL: CUESTIONARIOS -->
+      <div class="panel" id="panel-cuestionarios">
+        <div class="panel__titulo">
+          <h2>Mis Cuestionarios</h2>
+          <p style="color:var(--gris-texto);">Gestiona los cuestionarios desde cada materia.</p>
+        </div>
+        <div id="listaCuestionarios"></div>
+      </div>
+
+      <!-- PANEL: PERFIL -->
+      <div class="panel" id="panel-perfil">
+        <div class="panel__titulo"><h2>Mi perfil</h2></div>
+        <div class="panel__card" id="perfilInfo"></div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ===== MODALES ===== -->
+  <div class="modal-overlay" id="modalUsuario">
+    <div class="modal">
+      <div class="modal__header">
+        <h3 id="modalUsuarioTitulo">Nuevo usuario</h3>
+        <button class="modal__cerrar" onclick="cerrarModal('modalUsuario')">×</button>
+      </div>
+      <form id="formUsuario">
+        <input type="hidden" id="usuarioId" />
+        <div class="form-grupo">
+          <label>Nombre completo</label>
+          <input type="text" id="uNombre" class="form-control" required />
+        </div>
+        <div class="form-grupo">
+          <label>Correo electrónico</label>
+          <input type="email" id="uEmail" class="form-control" required />
+        </div>
+        <div class="form-grupo">
+          <label>Contraseña</label>
+          <input type="text" id="uPassword" class="form-control" required />
+        </div>
+        <div class="form-grupo">
+          <label>Rol</label>
+          <select id="uRol" class="form-control" required>
+            <option value="estudiante">Estudiante</option>
+            <option value="profesor">Profesor</option>
+            <option value="admin">Administrador</option>
+          </select>
+        </div>
+        <button type="submit" class="btn btn--primario btn--block">Guardar</button>
+      </form>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="modalMateria">
+    <div class="modal">
+      <div class="modal__header">
+        <h3 id="modalMateriaTitulo">Nueva materia</h3>
+        <button class="modal__cerrar" onclick="cerrarModal('modalMateria')">×</button>
+      </div>
+      <form id="formMateria">
+        <input type="hidden" id="materiaId" />
+        <div class="form-grupo">
+          <label>Nombre</label>
+          <input type="text" id="mNombre" class="form-control" required />
+        </div>
+        <div class="form-grupo">
+          <label>Descripción</label>
+          <textarea id="mDescripcion" class="form-control"></textarea>
+        </div>
+        <div class="form-grupo">
+          <label>Icono (emoji)</label>
+          <input type="text" id="mIcono" class="form-control" placeholder="📐" maxlength="4" />
+        </div>
+        <div class="form-grupo">
+          <label>Ruta de imagen (ej: assets/img/materia-x.jpg)</label>
+          <input type="text" id="mImagen" class="form-control" placeholder="assets/img/materia-x.jpg" />
+        </div>
+        <div class="form-grupo">
+          <label>Profesor asignado</label>
+          <select id="mProfesor" class="form-control"></select>
+        </div>
+        <button type="submit" class="btn btn--primario btn--block">Crear materia</button>
+      </form>
+    </div>
+  </div>
+
+  <script src="js/db.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/admin.js"></script>
+  <script src="js/profesor.js"></script>
+  <script src="js/estudiante.js"></script>
+  <script>
+    /* ============================================
+       ENRUTADOR DEL DASHBOARD
+       ============================================ */
+    document.addEventListener('DOMContentLoaded', () => {
+      const sesion = Auth.requiereSesion(); // redirige si no hay sesión
+      if (!sesion) return;
+
+      // Datos del usuario
+      document.getElementById('userNombre').textContent = sesion.nombre;
+      document.getElementById('saludoNombre').textContent = sesion.nombre.split(' ')[0];
+      const badge = document.getElementById('userRol');
+      badge.textContent = sesion.rol;
+      badge.className = 'badge badge--' + sesion.rol;
+
+      // Estadísticas
+      const usuarios = DB.getUsuarios();
+      document.getElementById('statMaterias').textContent = DB.getMaterias().length;
+      document.getElementById('statUsuarios').textContent = usuarios.length;
+      document.getElementById('statProfesores').textContent = usuarios.filter(u => u.rol === 'profesor').length;
+      document.getElementById('statEstudiantes').textContent = usuarios.filter(u => u.rol === 'estudiante').length;
+
+      // Menús por rol
+      if (sesion.rol === 'admin') {
+        document.getElementById('menuUsuarios').style.display = 'flex';
+        document.getElementById('menuCuestionarios').style.display = 'flex';
+        document.getElementById('btnNuevaMateria').style.display = 'inline-flex';
+      } else if (sesion.rol === 'profesor') {
+        document.getElementById('menuCuestionarios').style.display = 'flex';
+      }
+
+      // Navegación sidebar
+      document.querySelectorAll('.sidebar__item').forEach(btn => {
+        btn.addEventListener('click', () => {
+          document.querySelectorAll('.sidebar__item').forEach(b => b.classList.remove('activo'));
+          document.querySelectorAll('.panel').forEach(p => p.classList.remove('activo'));
+          btn.classList.add('activo');
+          const panel = document.getElementById('panel-' + btn.dataset.panel);
+          if (panel) panel.classList.add('activo');
+        });
+      });
+
+      // Render inicial según rol
+      if (sesion.rol === 'admin') AdminUI.init();
+      if (sesion.rol === 'profesor') ProfesorUI.init();
+      if (sesion.rol === 'estudiante') EstudianteUI.init();
+
+      // Perfil
+      document.getElementById('perfilInfo').innerHTML = `
+        <p><strong>Nombre:</strong> ${sesion.nombre}</p>
+        <p><strong>Correo:</strong> ${sesion.email}</p>
+        <p><strong>Rol:</strong> ${sesion.rol}</p>
+      `;
+    });
+
+    /* Utilidades de modales */
+    function abrirModal(id) { document.getElementById(id).classList.add('activo'); }
+    function cerrarModal(id) { document.getElementById(id).classList.remove('activo'); }
+    window.abrirModal = abrirModal;
+    window.cerrarModal = cerrarModal;
+  </script>
+</body>
+</html>

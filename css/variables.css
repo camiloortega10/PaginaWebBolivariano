@@ -1,0 +1,44 @@
+/* ============================================
+   PALETA DE COLORES Y VARIABLES GLOBALES
+   Modifica aquí los colores de todo el sitio
+   ============================================ */
+   :root {
+    /* Colores principales */
+    --azul-oscuro: #003366;
+    --azul-medio: #0A4D8C;
+    --azul-claro: #4A90E2;
+    --azul-suave: #E6F0FA;
+    --blanco: #FFFFFF;
+    --negro: #1A1A1A;
+    --gris-texto: #4A4A4A;
+    --gris-fondo: #F5F7FA;
+    --gris-borde: #E0E6ED;
+  
+    /* Estados */
+    --exito: #28A745;
+    --error: #DC3545;
+    --alerta: #FFC107;
+  
+    /* Tipografía */
+    --fuente-titulos: 'Montserrat', system-ui, sans-serif;
+    --fuente-cuerpo: 'Inter', system-ui, sans-serif;
+  
+    /* Espaciado */
+    --esp-xs: 0.25rem;
+    --esp-sm: 0.5rem;
+    --esp-md: 1rem;
+    --esp-lg: 2rem;
+    --esp-xl: 4rem;
+  
+    /* Bordes y sombras */
+    --radio-sm: 6px;
+    --radio-md: 12px;
+    --radio-lg: 20px;
+    --sombra-sm: 0 2px 8px rgba(0, 51, 102, 0.08);
+    --sombra-md: 0 8px 24px rgba(0, 51, 102, 0.12);
+    --sombra-lg: 0 16px 48px rgba(0, 51, 102, 0.16);
+  
+    /* Transiciones */
+    --trans-rapida: 0.2s ease;
+    --trans-normal: 0.3s ease;
+  }

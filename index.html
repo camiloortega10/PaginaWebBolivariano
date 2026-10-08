@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Colegio Bolivariano de Medellín - Inicio</title>
+  <meta name="description" content="Plataforma educativa del Colegio Bolivariano de Medellín" />
+  <link rel="stylesheet" href="css/variables.css" />
+  <link rel="stylesheet" href="css/main.css" />
+  <link rel="stylesheet" href="css/components.css" />
+</head>
+<body>
+
+  <!-- ===== HEADER ===== -->
+  <header class="header">
+    <nav class="navbar contenedor">
+      <a href="index.html" class="navbar__logo">
+        <img src="assets/img/logo.jpg" alt="Logo Colegio Bolivariano" onerror="this.style.display='none'" />
+        <span>Colegio Bolivariano</span>
+      </a>
+      <button class="navbar__toggle" onclick="document.querySelector('.navbar__menu').classList.toggle('abierto')">☰</button>
+      <ul class="navbar__menu">
+        <li><a href="index.html" class="activo">Inicio</a></li>
+        <li><a href="#nosotros">Nosotros</a></li>
+        <li><a href="#noticias">Noticias</a></li>
+        <li><a href="#contacto">Contacto</a></li>
+        <li><a href="login.html" class="btn btn--primario btn--sm">Iniciar Sesión</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- ===== HERO ===== -->
+  <section class="hero">
+    <div class="contenedor hero__grid">
+      <div>
+        <span class="hero__badge">🎓 Educación de calidad en Medellín</span>
+        <h1>Bienvenidos al Colegio Bolivariano</h1>
+        <p>"Educando y formando para una sociedad más humana". <br> <br>Te invitamos a explorar nuestra plataforma educativa.</p>
+        <div class="hero__acciones">
+          <a href="login.html" class="btn btn--blanco">Ingresar al aula virtual</a>
+          <a href="#noticias" class="btn btn--outline" style="border-color:#fff;color:#fff;">Ver noticias</a>
+        </div>
+      </div>
+      <img src="assets/img/hero-colegio.jpg" alt="Estudiantes del Colegio Bolivariano" class="hero__imagen" />
+    </div>
+  </section>
+
+
+  <!-- ===== NOSOTROS ===== -->
+  <section class="seccion" id="nosotros">
+    <div class="contenedor">
+      <div class="seccion__header">
+        <h2>Sobre Nosotros</h2>
+        <p>El Colegio Bolivariano de Medellín forma integralmente a niños y jóvenes con una educación moderna, humana y de excelencia.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== NOTICIAS ===== -->
+<section class="seccion seccion--gris" id="noticias">
+  <div class="contenedor">
+    <div class="seccion__header">
+      <span class="seccion__etiqueta">📰 Actualidad</span>
+      <h2>Noticias y Novedades</h2>
+      <p>Mantente al día con los eventos, logros y actividades de nuestra comunidad bolivariana.</p>
+    </div>
+
+    <div class="noticias-grid" id="gridNoticias">
+      <!-- Se llena dinámicamente con main.js -->
+    </div>
+  </div>
+</section>
+
+  <!-- ===== CONTACTO ===== -->
+  <section class="seccion" id="contacto">
+    <div class="contenedor">
+      <div class="seccion__header">
+        <h2>Contáctanos</h2>
+        <p>¿Tienes preguntas? Escríbenos y te responderemos pronto.</p>
+      </div>
+      <form style="max-width:600px;margin:0 auto;" onsubmit="event.preventDefault(); alert('¡Mensaje enviado! Pronto te contactaremos.'); this.reset();">
+        <div class="form-grupo">
+          <label>Nombre completo</label>
+          <input type="text" class="form-control" required />
+        </div>
+        <div class="form-grupo">
+          <label>Correo electrónico</label>
+          <input type="email" class="form-control" required />
+        </div>
+        <div class="form-grupo">
+          <label>Mensaje</label>
+          <textarea class="form-control" required></textarea>
+        </div>
+        <button type="submit" class="btn btn--primario btn--block">Enviar mensaje</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="footer">
+    <div class="contenedor">
+      <div class="footer__grid">
+        <div>
+          <h4>Colegio Bolivariano</h4>
+          <p>Formando líderes con valores en Medellín, Colombia.</p>
+        </div>
+        <div>
+          <h4>Enlaces</h4>
+          <ul>
+            <li><a href="#nosotros">Nosotros</a></li>
+            <li><a href="#noticias">Noticias</a></li>
+            <li><a href="login.html">Aula virtual</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Contacto</h4>
+          <ul>
+            <li>📧 gerencia@colegiobolivariano.edu.co</li>
+            <li>📞 +57 604 4087493</li>
+            <li>📞  +57 313 7 39 04 64</li>
+            <li>📍 Dirección: Cl 62 # 48-24 - Barrio Prado Centro - Medellín, Antioquia</li>
+          </ul>
+        </div>
+        <div>
+          <h4>Síguenos</h4>
+          <ul>
+            <li><a href="#">Facebook</a></li>
+            <li><a href="#">Instagram</a></li>
+            <li><a href="#">YouTube</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        © <span id="anio"></span> Colegio Bolivariano de Medellín. Todos los derechos reservados.
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/db.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

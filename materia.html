@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Materia - Colegio Bolivariano</title>
+  <link rel="stylesheet" href="css/variables.css" />
+  <link rel="stylesheet" href="css/main.css" />
+  <link rel="stylesheet" href="css/components.css" />
+  <link rel="stylesheet" href="css/dashboard.css" />
+</head>
+<body>
+
+  <header class="header">
+    <nav class="navbar contenedor">
+      <a href="index.html" class="navbar__logo">
+        <img src="assets/img/logo.jpg" alt="" onerror="this.style.display='none'" />
+        <span>Colegio Bolivariano</span>
+      </a>
+      <ul class="navbar__menu">
+        <li><a href="dashboard.html">Panel</a></li>
+        <li id="navLogin"><a href="login.html" class="btn btn--primario btn--sm">Iniciar Sesión</a></li>
+        <li id="navLogout" style="display:none;"><button class="btn btn--outline btn--sm" onclick="Auth.logout()">Salir</button></li>
+      </ul>
+    </nav>
+  </header>
+
+  <section class="materia-hero">
+    <div class="contenedor">
+      <h1 id="materiaNombre">Cargando...</h1>
+      <p id="materiaDescripcion"></p>
+    </div>
+  </section>
+
+  <main class="contenedor">
+    <div class="materia-tabs">
+      <button class="materia-tab activo" data-tab="contenido">📖 Contenido</button>
+      <button class="materia-tab" data-tab="videos">🎥 Videos</button>
+      <button class="materia-tab" data-tab="actividades">🎮 Actividades Interactivas</button>
+      <button class="materia-tab" data-tab="libros">📚 Libros Digitales</button>
+      <button class="materia-tab" data-tab="cuestionarios">📝 Cuestionarios</button>
+    </div>
+
+    <!-- CONTENIDO DEL PROFESOR -->
+    <div class="tab-panel activo" id="tab-contenido">
+      <div id="editorContenido"></div>
+      <div id="vistaContenido"></div>
+    </div>
+
+    <!-- VIDEOS -->
+    <div class="tab-panel" id="tab-videos">
+      <div id="editorVideos"></div>
+      <div id="vistaVideos" class="grid-embeds"></div>
+    </div>
+
+    <!-- ACTIVIDADES -->
+    <div class="tab-panel" id="tab-actividades">
+      <div id="editorActividades"></div>
+      <div id="vistaActividades" class="grid-embeds"></div>
+    </div>
+
+    <!-- LIBROS -->
+    <div class="tab-panel" id="tab-libros">
+      <div id="editorLibros"></div>
+      <div id="vistaLibros" class="grid-embeds"></div>
+    </div>
+
+    <!-- CUESTIONARIOS -->
+    <div class="tab-panel" id="tab-cuestionarios">
+      <div id="editorCuestionarios"></div>
+      <div id="vistaCuestionarios"></div>
+    </div>
+  </main>
+
+  <!-- MODAL: agregar video / actividad / libro -->
+  <div class="modal-overlay" id="modalEmbed">
+    <div class="modal">
+      <div class="modal__header">
+        <h3 id="modalEmbedTitulo">Agregar</h3>
+        <button class="modal__cerrar" onclick="cerrarModal('modalEmbed')">×</button>
+      </div>
+      <form id="formEmbed">
+        <input type="hidden" id="embedTipo" />
+        <div class="form-grupo">
+          <label>Título</label>
+          <input type="text" id="embedTitulo" class="form-control" required />
+        </div>
+        <div class="form-grupo">
+          <label>URL del embed (iframe src)</label>
+          <input type="url" id="embedUrl" class="form-control" placeholder="https://..." required />
+        </div>
+        <button type="submit" class="btn btn--primario btn--block">Agregar</button>
+      </form>
+    </div>
+  </div>
+
+  <script src="js/db.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/materia.js"></script>
+  <script src="js/quiz.js"></script>
+</body>
+</html>
