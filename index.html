@@ -47,14 +47,150 @@
 
 
   <!-- ===== NOSOTROS ===== -->
-  <section class="seccion" id="nosotros">
-    <div class="contenedor">
-      <div class="seccion__header">
-        <h2>Sobre Nosotros</h2>
-        <p>El Colegio Bolivariano de Medellín forma integralmente a niños y jóvenes con una educación moderna, humana y de excelencia.</p>
+<section class="seccion seccion--nosotros" id="nosotros">
+  <div class="contenedor">
+    <div class="nosotros-grid">
+
+      <!-- Columna izquierda: texto interactivo -->
+      <div class="nosotros-texto">
+        <span class="seccion__etiqueta">🏛️ Sobre Nosotros</span>
+        <h2>Más de <span class="nosotros-highlight">25 años</span> formando líderes en Medellín</h2>
+        <p class="nosotros-intro">
+          En el Colegio Bolivariano creemos en una educación que transforma vidas. Formamos
+          jóvenes y adultos con pensamiento crítico, valores sólidos y pasión por aprender.
+        </p>
+
+        <!-- Pestañas -->
+        <div class="nosotros-tabs">
+          <button class="nosotros-tab activo" data-tab="historia" data-imagen="assets/img/nosotros-historia.jpg">
+            Nuestra Historia
+          <button class="nosotros-tab" data-tab="nosotros" data-imagen="assets/img/nosotros-nosotros.jpg">
+            Sobre Nosotros
+          </button>
+          <button class="nosotros-tab" data-tab="mision" data-imagen="assets/img/nosotros-mision.jpg">
+            Misión
+          </button>
+          <button class="nosotros-tab" data-tab="vision" data-imagen="assets/img/nosotros-vision.jpg">
+            Visión
+          </button>
+          <button class="nosotros-tab" data-tab="valores" data-imagen="assets/img/nosotros-valores.jpg">
+            Valores
+          </button>
+        </div>
+
+        <!-- Paneles de texto -->
+        <div class="nosotros-panel activo" id="tab-historia">
+          <p>
+              El Colegio Bolivariano es una institución de educación formal para jóvenes y adultos que, 
+              desde el segundo semestre de 1999, ha abierto sus puertas a quienes, por razones laborales 
+              o familiares, no pudieron continuar en la educación regular. Nació en Medellín y el Valle
+              de Aburrá con una convicción clara: la edad, el horario o las circunstancias no deben 
+              ser obstáculos para aprender. <br>
+
+              Su historia legal respalda este compromiso. El 7 de diciembre de 1999 recibió la resolución
+              provisional 11313; el 3 de agosto de 2001 obtuvo la resolución 5992, que aprobó la institución
+              de manera indefinida; y el 23 de octubre de 2006, mediante la licencia de funcionamiento 7964,
+              quedó autorizado para impartir educación formal de adultos en básica primaria (CLEI 1 y 2),
+              básica secundaria (CLEI 3 y 4) y media académica (CLEI 5 y 6), en jornadas diurna, nocturna,
+              sabatina y dominical.
+          </p>
+        </div>
+
+        <div class="nosotros-panel" id="tab-nosotros">
+          <p>
+            Durante 26 años, el Colegio Bolivariano se ha consolidado como líder en la formación de bachilleres
+            en Medellín. Aquí llegan jóvenes y adultos de distintos sectores de la ciudad que buscan un espacio
+            educativo acorde con sus condiciones económicas y de extraedad, así como trabajadores de empresas
+            aliadas de sectores como la construcción, las confecciones, los servicios generales, la vigilancia
+            y la metalmecánica, entre otros. Todos encuentran un trato cercano y un servicio comprometido. <br>
+
+            Nuestra oferta flexible permite estudiar los fines de semana y avanzar con el acompañamiento de 
+            docentes y personal administrativo de gran calidad humana, didáctica y pedagógica. Contamos con 
+            profesionales, muchos con maestría y doctorado, capaces de guiar a cada estudiante en su proceso 
+            de enseñanza y aprendizaje. Esa experiencia nos permite acompañar al estudiante en extraedad, al 
+            adulto y al trabajador hasta cumplir el sueño de graduarse como bachiller. <br>
+
+            En el Colegio Bolivariano creemos que educar es transformar vidas. Permítanos ser parte de su 
+            proceso formativo y acompañarle en el camino hacia su título de bachiller.
+          </p>
+        </div>
+        
+        <div class="nosotros-panel" id="tab-mision">
+          <p>
+            El Colegio Bolivariano, pretende formar jóvenes y adultos para la vida,
+            el trabajo y la educación superior.  Forma el talento humano, prestando
+            servicios de educación básica primaria, básica secundaria y media académica
+            en la modalidad semipresencial.  Asume su responsabilidad y compromiso
+            educativo, fomentando la formación en valores de sus educandos, además
+            de su progreso y  bienestar.
+
+          </p>
+        </div>
+
+        <div class="nosotros-panel" id="tab-vision">
+          <p>
+            El Colegio Bolivariano se proyecta como una institución, que además de
+            brindar la formación en bachillerato semipresencial, aspira a que sus
+            educandos a partir del año 2030, continúen su proceso formativo orientado
+            en programas técnicos de formación para el trabajo que posibiliten su
+            acceso de manera rápida al mercado laboral.
+
+          </p>
+        </div>
+
+        <div class="nosotros-panel" id="tab-valores">
+          <ul>
+            <li><strong>Respeto</strong> — por la dignidad de cada persona.</li>
+            <li><strong>Responsabilidad</strong> — con nuestro aprendizaje y comunidad.</li>
+            <li><strong>Solidaridad</strong> — como motor del cambio social.</li>
+            <li><strong>Excelencia</strong> — en cada proceso académico y humano.</li>
+            <li><strong>Identidad</strong> — orgullo por nuestra historia y cultura.</li>
+          </ul>
+        </div>
+
+        <!-- Estadísticas 
+        <div class="nosotros-stats">
+          <div class="stat-item">
+            <strong>+30</strong>
+            <span>Años de experiencia</span>
+          </div>
+          <div class="stat-item">
+            <strong>1.200</strong>
+            <span>Estudiantes activos</span>
+          </div>
+          <div class="stat-item">
+            <strong>85</strong>
+            <span>Docentes calificados</span>
+          </div>
+        </div> -->
+
+        <a href="#contacto" class="btn btn--primario" style="margin-top:1.5rem;">Conoce más sobre nosotros →</a>
       </div>
+
+      <!-- Columna derecha: imagen interactiva -->
+      <div class="nosotros-imagenes">
+        <div class="nosotros-img-wrapper" id="nosotrosImgWrapper" data-imagen-actual="assets/img/nosotros-historia.jpg">
+          <img id="nosotrosImagen"
+               src="assets/img/nosotros-historia.jpg"
+               alt="Colegio Bolivariano"
+               onerror="this.src='https://via.placeholder.com/600x750/003366/FFFFFF?text=Colegio+Bolivariano'" />
+        </div>
+        
+        <!-- imagen que muestra el sello de calidad -->
+
+        <!--<div class="nosotros-badge">
+          <span class="nosotros-badge__icono">🏆</span>
+          <div>
+            <strong>Colegio Acreditado</strong>
+            <small>Calidad educativa certificada</small>
+          </div>
+        </div> -->
+      
+      </div>
+
     </div>
-  </section>
+  </div>
+</section>
 
   <!-- ===== NOTICIAS ===== -->
 <section class="seccion seccion--gris" id="noticias">

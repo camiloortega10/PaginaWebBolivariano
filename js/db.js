@@ -208,6 +208,20 @@
     this.guardar(datos);
   },
 
+    getNoticiaPorId(id) {
+    return this.getNoticias().find(n => n.id === id);
+  },
+  actualizarNoticia(id, cambios) {
+    const datos = this.leer();
+    const idx = (datos.noticias || []).findIndex(n => n.id === id);
+    if (idx >= 0) {
+      datos.noticias[idx] = { ...datos.noticias[idx], ...cambios };
+      this.guardar(datos);
+      return datos.noticias[idx];
+    }
+    return null;
+  },
+
      /* ---- Materias ---- */
      getMaterias() { return this.leer().materias; },
      getMateriaPorId(id) { return this.getMaterias().find(m => m.id === id); },

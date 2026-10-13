@@ -4,10 +4,11 @@
 
    const AdminUI = {
     init() {
-      this.renderUsuarios();
-      this.renderMaterias();
-      this.renderCuestionarios();
-      this.bindFormularios();
+    this.renderUsuarios();
+    this.renderMaterias();
+    this.renderNoticias();
+    this.renderCuestionarios();
+    this.bindFormularios();
     },
   
     /* ---- USUARIOS ---- */
@@ -123,6 +124,70 @@
       abrirModal('modalMateria');
     },
     
+      /* ---- NOTICIAS ---- */
+  renderNoticias() {
+    const contenedor = document.getElementById('listaNoticiasAdmin');
+    if (!contenedor) return;
+
+    const noticias = DB.getNoticias();
+
+    if (!noticias.length) {
+      contenedor.innerHTML = '<p class="estado-vacio">No hay noticias publicadas. Crea la primera.</p>';
+      return;
+    }
+
+    const fechaFormato = (fecha) => {
+      if (!fecha) return 'Sin fecha';
+      const d = new Date(fecha + 'T00:00:00');
+      return d.toLocaleDateString('es-CO', { day: 'numeric', month: 'short', year: 'numeric' });
+    };
+
+    contenedor.innerHTML = noticias.map(n => `
+      <article class="card-materia">
+        <img src="${n.imagen}" class="card-materia__imagen" alt="${n.titulo}"
+             onerror="this.src='https://via.placeholder.com/400x300/003366/FFFFFF?text=Noticia'" />
+        <div class="card-materia__cuerpo">
+          <span class="badge" style="background:var(--azul-suave);color:var(--azul-medio);margin-bottom:.4rem;font-size:.7rem;">
+            ${n.categoria || 'General'}
+          </span>
+          <h3 style="font-size:1.05rem;">${n.titulo}</h3>
+          <p style="font-size:.85rem;">${n.resumen || ''}</p>
+          <div class="card-materia__footer" style="flex-direction:column;align-items:flex-start;gap:.5rem;">
+            <span style="font-size:.75rem;">📅 ${fechaFormato(n.fecha)} · ✍️ ${n.autor || 'Colegio'}</span>
+            <div style="display:flex;gap:.3rem;width:100%;">
+              <button class="btn btn--primario btn--sm" style="flex:1;" onclick="AdminUI.editarNoticia('${n.id}')">Editar</button>
+              <button class="btn btn--peligro btn--sm" onclick="AdminUI.eliminarNoticia('${n.id}')">×</button>
+            </div>
+          </div>
+        </div>
+      </article>
+    `).join('');
+  },
+
+  editarNoticia(id) {
+    const n = DB.getNoticiaPorId(id);
+    if (!n) return;
+
+    document.getElementById('modalNoticiaTitulo').textContent = 'Editar noticia';
+    document.getElementById('noticiaId').value = n.id;
+    document.getElementById('nTitulo').value = n.titulo || '';
+    document.getElementById('nResumen').value = n.resumen || '';
+    document.getElementById('nContenido').value = n.contenido || '';
+    document.getElementById('nCategoria').value = n.categoria || 'General';
+    document.getElementById('nAutor').value = n.autor || '';
+    document.getElementById('nFecha').value = n.fecha || '';
+    document.getElementById('nImagen').value = n.imagen || '';
+
+    abrirModal('modalNoticia');
+  },
+
+  eliminarNoticia(id) {
+    if (!confirm('¿Eliminar esta noticia? Esta acción no se puede deshacer.')) return;
+    DB.eliminarNoticia(id);
+    this.renderNoticias();
+  },
+
+
     /* ---- CUESTIONARIOS ---- */
     renderCuestionarios() {
       const contenedor = document.getElementById('listaCuestionarios');
@@ -196,29 +261,62 @@
         abrirModal('modalMateria');
       });
 
-      document.getElementById('formMateria').addEventListener('submit', (e) => {
-        e.preventDefault();
-        
-        const id = document.getElementById('materiaId').value;
-        const datos = {
-          nombre: document.getElementById('mNombre').value.trim(),
-          descripcion: document.getElementById('mDescripcion').value.trim(),
-          icono: document.getElementById('mIcono').value.trim(),
-          imagen: document.getElementById('mImagen').value.trim() || 'assets/img/materia-default.jpg',
-          profesorId: document.getElementById('mProfesor').value
-        };
+          document.getElementById('formMateria').addEventListener('submit', (e) => {
+      e.preventDefault();
+      
+      const id = document.getElementById('materiaId').value;
+      const datos = {
+        nombre: document.getElementById('mNombre').value.trim(),
+        descripcion: document.getElementById('mDescripcion').value.trim(),
+        icono: document.getElementById('mIcono').value.trim(),
+        imagen: document.getElementById('mImagen').value.trim() || 'assets/img/materia-default.jpg',
+        profesorId: document.getElementById('mProfesor').value
+      };
 
-        if (id) {
-          // Modo edición
-          DB.actualizarMateria(id, datos);
-        } else {
-          // Modo creación
-          DB.agregarMateria(datos);
-        }
-        
-        cerrarModal('modalMateria');
-        e.target.reset();
-        this.renderMaterias();
-      });
-    }
-  };
+      if (id) {
+        DB.actualizarMateria(id, datos);
+      } else {
+        DB.agregarMateria(datos);
+      }
+      
+      cerrarModal('modalMateria');
+      e.target.reset();
+      this.renderMaterias();
+    });
+
+    /* ============ NOTICIAS ============ */
+    document.getElementById('btnNuevaNoticia').addEventListener('click', () => {
+      document.getElementById('modalNoticiaTitulo').textContent = 'Nueva noticia';
+      document.getElementById('noticiaId').value = '';
+      document.getElementById('formNoticia').reset();
+      // Fecha de hoy por defecto
+      document.getElementById('nFecha').value = new Date().toISOString().split('T')[0];
+      abrirModal('modalNoticia');
+    });
+
+    document.getElementById('formNoticia').addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      const id = document.getElementById('noticiaId').value;
+      const datos = {
+        titulo: document.getElementById('nTitulo').value.trim(),
+        resumen: document.getElementById('nResumen').value.trim(),
+        contenido: document.getElementById('nContenido').value.trim(),
+        categoria: document.getElementById('nCategoria').value,
+        autor: document.getElementById('nAutor').value.trim() || 'Colegio Bolivariano',
+        fecha: document.getElementById('nFecha').value,
+        imagen: document.getElementById('nImagen').value.trim() || 'assets/img/noticia-default.jpg'
+      };
+
+      if (id) {
+        DB.actualizarNoticia(id, datos);
+      } else {
+        DB.agregarNoticia(datos);
+      }
+
+      cerrarModal('modalNoticia');
+      e.target.reset();
+      this.renderNoticias();
+    });
+  }
+};

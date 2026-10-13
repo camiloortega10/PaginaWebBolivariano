@@ -33,6 +33,7 @@
       <button class="sidebar__item activo" data-panel="inicio">🏠 Inicio</button>
       <button class="sidebar__item" data-panel="materias">📚 Materias</button>
       <button class="sidebar__item" data-panel="usuarios" id="menuUsuarios" style="display:none;">👥 Usuarios</button>
+      <button class="sidebar__item" data-panel="noticias" id="menuNoticias" style="display:none;">📰 Noticias</button>
       <button class="sidebar__item" data-panel="cuestionarios" id="menuCuestionarios" style="display:none;">📝 Cuestionarios</button>
       <button class="sidebar__item" data-panel="perfil">👤 Mi perfil</button>
     </aside>
@@ -83,6 +84,18 @@
           <button class="btn btn--primario" id="btnNuevoUsuario">+ Nuevo usuario</button>
         </div>
         <div id="tablaUsuarios"></div>
+      </div>
+
+            <!-- PANEL: NOTICIAS (solo admin) -->
+      <div class="panel" id="panel-noticias">
+        <div class="panel__titulo">
+          <h2>Gestión de Noticias</h2>
+          <button class="btn btn--primario" id="btnNuevaNoticia">+ Nueva noticia</button>
+        </div>
+        <p style="color:var(--gris-texto); margin-bottom:1rem;">
+          Estas noticias aparecen en la sección <strong>"Noticias y Novedades"</strong> de la página principal.
+        </p>
+        <div id="listaNoticiasAdmin" class="grid-materias"></div>
       </div>
 
       <!-- PANEL: CUESTIONARIOS -->
@@ -169,6 +182,68 @@
     </div>
   </div>
 
+  <div class="modal-overlay" id="modalNoticia">
+    <div class="modal">
+      <div class="modal__header">
+        <h3 id="modalNoticiaTitulo">Nueva noticia</h3>
+        <button class="modal__cerrar" onclick="cerrarModal('modalNoticia')">×</button>
+      </div>
+      <form id="formNoticia">
+        <input type="hidden" id="noticiaId" />
+
+        <div class="form-grupo">
+          <label>Título</label>
+          <input type="text" id="nTitulo" class="form-control" required placeholder="Ej: Ceremonia de graduación 2025" />
+        </div>
+
+        <div class="form-grupo">
+          <label>Resumen / Descripción corta</label>
+          <textarea id="nResumen" class="form-control" required placeholder="Una o dos frases que resuman la noticia..."></textarea>
+        </div>
+
+        <div class="form-grupo">
+          <label>Contenido completo (opcional)</label>
+          <textarea id="nContenido" class="form-control" placeholder="Aquí puedes escribir el cuerpo completo de la noticia..." style="min-height:150px;"></textarea>
+        </div>
+
+        <div class="form-grupo">
+          <label>Categoría</label>
+          <select id="nCategoria" class="form-control">
+            <option value="Eventos">Eventos</option>
+            <option value="Logros">Logros</option>
+            <option value="Cultura">Cultura</option>
+            <option value="Deportes">Deportes</option>
+            <option value="Académico">Académico</option>
+            <option value="Infraestructura">Infraestructura</option>
+            <option value="Comunicados">Comunicados</option>
+            <option value="General">General</option>
+          </select>
+        </div>
+
+        <div class="form-grupo">
+          <label>Autor / Área responsable</label>
+          <input type="text" id="nAutor" class="form-control" placeholder="Ej: Rectoría, Coordinación Académica..." />
+        </div>
+
+        <div class="form-grupo">
+          <label>Fecha</label>
+          <input type="date" id="nFecha" class="form-control" required />
+        </div>
+
+        <div class="form-grupo">
+          <label>Ruta de imagen</label>
+          <input type="text" id="nImagen" class="form-control"
+                 placeholder="assets/img/noticia-nombre.jpg" />
+          <small style="color:var(--gris-texto); font-size:0.8rem;">
+            Sube primero la imagen a la carpeta <code>assets/img/</code> y luego escribe aquí su ruta.
+          </small>
+        </div>
+
+        <button type="submit" class="btn btn--primario btn--block">Guardar</button>
+      </form>
+    </div>
+  </div>
+
   <script src="js/db.js"></script>
   <script src="js/auth.js"></script>
   <script src="js/admin.js"></script>
@@ -199,6 +274,7 @@
       // Menús por rol
       if (sesion.rol === 'admin') {
         document.getElementById('menuUsuarios').style.display = 'flex';
+        document.getElementById('menuNoticias').style.display = 'flex';
         document.getElementById('menuCuestionarios').style.display = 'flex';
         document.getElementById('btnNuevaMateria').style.display = 'inline-flex';
       } else if (sesion.rol === 'profesor') {

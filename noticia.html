@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Noticia - Colegio Bolivariano</title>
+  <link rel="stylesheet" href="css/variables.css" />
+  <link rel="stylesheet" href="css/main.css" />
+  <link rel="stylesheet" href="css/components.css" />
+</head>
+<body>
+
+  <!-- ===== HEADER ===== -->
+  <header class="header">
+    <nav class="navbar contenedor">
+      <a href="index.html" class="navbar__logo">
+        <img src="assets/img/logo.svg" alt="Logo Colegio Bolivariano" onerror="this.style.display='none'" />
+        <span>Colegio Bolivariano</span>
+      </a>
+      <button class="navbar__toggle" onclick="document.querySelector('.navbar__menu').classList.toggle('abierto')">☰</button>
+      <ul class="navbar__menu">
+        <li><a href="index.html">Inicio</a></li>
+        <li><a href="index.html#nosotros">Nosotros</a></li>
+        <li><a href="index.html#noticias" class="activo">Noticias</a></li>
+        <li><a href="index.html#contacto">Contacto</a></li>
+        <li><a href="login.html" class="btn btn--primario btn--sm">Iniciar Sesión</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- ===== MIGA DE PAN ===== -->
+  <div class="miga">
+    <div class="contenedor">
+      <a href="index.html">Inicio</a>
+      <span>›</span>
+      <a href="index.html#noticias">Noticias</a>
+      <span>›</span>
+      <span id="migaTitulo" class="miga__actual">Cargando...</span>
+    </div>
+  </div>
+
+  <!-- ===== NOTICIA ===== -->
+  <main id="contenedorNoticia" class="contenedor noticia-full">
+
+    <!-- Columna principal -->
+    <article class="noticia-full__principal">
+      <span class="badge badge-noticia" id="noticiaCategoria">General</span>
+      <h1 id="noticiaTitulo">Cargando...</h1>
+      <div class="noticia__meta" id="noticiaMeta"></div>
+      
+      <div class="noticia-full__hero">
+        <img id="noticiaImagen" src="" alt="" 
+             onerror="this.src='https://via.placeholder.com/1200x600/003366/FFFFFF?text=Noticia'" />
+      </div>
+
+      <div class="noticia-full__contenido" id="noticiaContenido"></div>
+
+      <div class="noticia-full__acciones">
+        <a href="index.html#noticias" class="btn btn--outline">← Volver a noticias</a>
+        <button class="btn btn--primario" onclick="compartirNoticia()">🔗 Compartir</button>
+      </div>
+    </article>
+
+    <!-- Columna lateral -->
+    <aside class="noticia-full__lateral">
+      <h3>Otras noticias</h3>
+      <div id="otrasNoticias"></div>
+    </aside>
+
+  </main>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="footer">
+    <div class="contenedor">
+      <div class="footer__grid">
+        <div>
+          <h4>Colegio Bolivariano</h4>
+          <p>Formando líderes con valores en Medellín, Colombia.</p>
+        </div>
+        <div>
+          <h4>Enlaces</h4>
+          <ul>
+            <li><a href="index.html#nosotros">Nosotros</a></li>
+            <li><a href="index.html#noticias">Noticias</a></li>
+            <li><a href="login.html">Aula virtual</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Contacto</h4>
+          <ul>
+            <li>📧 info@colegiobolivariano.edu.co</li>
+            <li>📞 +57 604 123 4567</li>
+            <li>📍 Medellín, Antioquia</li>
+          </ul>
+        </div>
+        <div>
+          <h4>Síguenos</h4>
+          <ul>
+            <li><a href="#">Facebook</a></li>
+            <li><a href="#">Instagram</a></li>
+            <li><a href="#">YouTube</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        © <span id="anio"></span> Colegio Bolivariano de Medellín. Todos los derechos reservados.
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/db.js"></script>
+  <script src="js/noticia.js"></script>
+</body>
+</html>
