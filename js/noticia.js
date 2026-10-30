@@ -2,27 +2,33 @@
    PÁGINA DE NOTICIA COMPLETA
    ============================================ */
 
-document.addEventListener('DOMContentLoaded', () => {
-  // Año en el footer
+// js/noticia.js
+import { DB } from './db.js';
+
+document.addEventListener('DOMContentLoaded', async () => {
   const anio = document.getElementById('anio');
   if (anio) anio.textContent = new Date().getFullYear();
 
-  // Obtener ID desde la URL (ej: noticia.html?id=n1)
   const params = new URLSearchParams(window.location.search);
   const noticiaId = params.get('id');
-  const noticia = DB.getNoticiaPorId(noticiaId);
 
-  if (!noticia) {
-    document.getElementById('noticiaTitulo').textContent = 'Noticia no encontrada';
-    document.getElementById('noticiaContenido').innerHTML =
-      '<p>Lo sentimos, la noticia que buscas no existe o fue eliminada.</p>' +
-      '<a href="index.html#noticias" class="btn btn--primario">Volver al inicio</a>';
-    document.getElementById('noticiaImagen').style.display = 'none';
-    document.getElementById('noticiaCategoria').style.display = 'none';
+  if (!noticiaId) {
+    mostrarNoEncontrada();
     return;
   }
 
-  // Formatear fecha
+  let noticia = null;
+  try {
+    noticia = await DB.getNoticiaPorId(noticiaId);
+  } catch (e) {
+    console.error('Error cargando noticia:', e);
+  }
+
+  if (!noticia) {
+    mostrarNoEncontrada();
+    return;
+  }
+
   const fechaFormato = (fecha) => {
     if (!fecha) return 'Sin fecha';
     const d = new Date(fecha + 'T00:00:00');
@@ -31,43 +37,52 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   };
 
-  // Actualizar título de la pestaña
   document.title = `${noticia.titulo} - Colegio Bolivariano`;
 
-  // Miga de pan
   const miga = document.getElementById('migaTitulo');
   if (miga) miga.textContent = noticia.titulo;
 
-  // Categoría
   document.getElementById('noticiaCategoria').textContent = noticia.categoria || 'General';
-
-  // Título
   document.getElementById('noticiaTitulo').textContent = noticia.titulo;
 
-  // Meta (fecha + autor)
   document.getElementById('noticiaMeta').innerHTML = `
     <span>📅 ${fechaFormato(noticia.fecha)}</span>
     <span>✍️ ${noticia.autor || 'Colegio Bolivariano'}</span>
   `;
 
-  // Imagen
   const img = document.getElementById('noticiaImagen');
   img.src = noticia.imagen || '';
   img.alt = noticia.titulo;
 
-  // Contenido completo
-  // Si tiene 'contenido', lo mostramos; si no, usamos el resumen.
   const contenido = noticia.contenido || noticia.resumen || 'Sin contenido disponible.';
   document.getElementById('noticiaContenido').innerHTML =
     contenido.split('\n').map(p => p.trim() ? `<p>${p}</p>` : '').join('');
 
-  // Otras noticias (excluyendo la actual)
-  renderizarOtrasNoticias(noticia.id);
+  await renderizarOtrasNoticias(noticia.id);
 });
 
-function renderizarOtrasNoticias(idActual) {
+function mostrarNoEncontrada() {
+  document.getElementById('noticiaTitulo').textContent = 'Noticia no encontrada';
+  document.getElementById('noticiaContenido').innerHTML =
+    '<p>Lo sentimos, la noticia que buscas no existe o fue eliminada.</p>' +
+    '<a href="index.html#noticias" class="btn btn--primario">Volver al inicio</a>';
+  const img = document.getElementById('noticiaImagen');
+  if (img) img.style.display = 'none';
+  const cat = document.getElementById('noticiaCategoria');
+  if (cat) cat.style.display = 'none';
+}
+
+async function renderizarOtrasNoticias(idActual) {
   const contenedor = document.getElementById('otrasNoticias');
-  const otras = DB.getNoticias().filter(n => n.id !== idActual).slice(0, 4);
+  if (!contenedor) return;
+
+  let otras = [];
+  try {
+    const todas = await DB.getNoticias();
+    otras = todas.filter(n => n.id !== idActual).slice(0, 4);
+  } catch (e) {
+    console.error(e);
+  }
 
   if (!otras.length) {
     contenedor.innerHTML = '<p style="color:var(--gris-texto);font-size:.9rem;">No hay más noticias.</p>';
@@ -94,7 +109,6 @@ function renderizarOtrasNoticias(idActual) {
   `).join('');
 }
 
-/* Compartir noticia (usa la API nativa del navegador si está disponible) */
 window.compartirNoticia = function() {
   const url = window.location.href;
   const titulo = document.getElementById('noticiaTitulo').textContent;
@@ -102,7 +116,6 @@ window.compartirNoticia = function() {
   if (navigator.share) {
     navigator.share({ title: titulo, url }).catch(() => {});
   } else {
-    // Fallback: copiar al portapapeles
     navigator.clipboard.writeText(url).then(() => {
       alert('✅ Enlace copiado al portapapeles');
     }).catch(() => {

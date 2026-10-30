@@ -70,10 +70,14 @@
         </form>
 
         <div class="demo-creds">
-          <strong>🔑 Cuentas de prueba:</strong>
-          Admin: <code>admin@colegio.com</code> / <code>admin123</code><br>
-          Profesor: <code>maria@colegio.com</code> / <code>profe123</code><br>
-          Estudiante: <code>juan@colegio.com</code> / <code>est123</code>
+          <strong>🔑 Instrucciones de Ingreso:</strong>
+        
+          <p>Ingrese al aula virtual con su cuenta de correo electrónico <br>
+            
+            institucional y la contraseña asignada por su coordinador.<br>
+  
+          </p>
+         
         </div>
       </div>
     </div>
@@ -86,19 +90,28 @@
     </div>
   </div>
 
-  <script src="js/db.js"></script>
-  <script src="js/auth.js"></script>
-  <script>
-    // Si ya hay sesión, redirige al dashboard
-    if (Auth.sesion()) window.location.href = 'dashboard.html';
+  <script type="module">
+    import { Auth } from './js/auth.js';
 
-    document.getElementById('formLogin').addEventListener('submit', (e) => {
+    // Si ya hay sesión activa, redirige al dashboard automáticamente
+    document.addEventListener('DOMContentLoaded', async () => {
+      const sesionActual = await Auth.obtenerSesion();
+      if (sesionActual) {
+        window.location.href = 'dashboard.html';
+      }
+    });
+
+    // Manejar el envío del formulario
+    document.getElementById('formLogin').addEventListener('submit', async (e) => {
       e.preventDefault();
       const email = document.getElementById('email').value.trim();
       const password = document.getElementById('password').value;
       const alerta = document.getElementById('alertaLogin');
 
-      const resultado = Auth.login(email, password);
+      alerta.innerHTML = '<div class="alerta alerta--info">Verificando credenciales...</div>';
+
+      const resultado = await Auth.login(email, password);
+
       if (resultado.ok) {
         window.location.href = 'dashboard.html';
       } else {

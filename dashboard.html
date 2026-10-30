@@ -244,17 +244,25 @@
     </div>
   </div>
 
-  <script src="js/db.js"></script>
-  <script src="js/auth.js"></script>
-  <script src="js/admin.js"></script>
-  <script src="js/profesor.js"></script>
-  <script src="js/estudiante.js"></script>
-  <script>
-    /* ============================================
-       ENRUTADOR DEL DASHBOARD
-       ============================================ */
-    document.addEventListener('DOMContentLoaded', () => {
-      const sesion = Auth.requiereSesion(); // redirige si no hay sesión
+    <script type="module">
+    import { Auth } from './js/auth.js';
+    import { DB } from './js/db.js';
+    import { AdminUI } from './js/admin.js';
+    import { ProfesorUI } from './js/profesor.js';
+    import { EstudianteUI } from './js/estudiante.js';
+
+    // Exponer globalmente para que funcionen los onclick="..." del HTML
+    window.Auth = Auth;
+    window.DB = DB;
+    window.AdminUI = AdminUI;
+    window.ProfesorUI = ProfesorUI;
+    window.EstudianteUI = EstudianteUI;
+
+    window.abrirModal = function(id) { document.getElementById(id).classList.add('activo'); };
+    window.cerrarModal = function(id) { document.getElementById(id).classList.remove('activo'); };
+
+    document.addEventListener('DOMContentLoaded', async () => {
+      const sesion = await Auth.requiereSesion();
       if (!sesion) return;
 
       // Datos del usuario
@@ -264,9 +272,10 @@
       badge.textContent = sesion.rol;
       badge.className = 'badge badge--' + sesion.rol;
 
-      // Estadísticas
-      const usuarios = DB.getUsuarios();
-      document.getElementById('statMaterias').textContent = DB.getMaterias().length;
+      // Estadísticas (async)
+      const usuarios = await DB.getUsuarios();
+      const materias = await DB.getMaterias();
+      document.getElementById('statMaterias').textContent = materias.length;
       document.getElementById('statUsuarios').textContent = usuarios.length;
       document.getElementById('statProfesores').textContent = usuarios.filter(u => u.rol === 'profesor').length;
       document.getElementById('statEstudiantes').textContent = usuarios.filter(u => u.rol === 'estudiante').length;
@@ -293,9 +302,9 @@
       });
 
       // Render inicial según rol
-      if (sesion.rol === 'admin') AdminUI.init();
-      if (sesion.rol === 'profesor') ProfesorUI.init();
-      if (sesion.rol === 'estudiante') EstudianteUI.init();
+      if (sesion.rol === 'admin') await AdminUI.init();
+      if (sesion.rol === 'profesor') await ProfesorUI.init();
+      if (sesion.rol === 'estudiante') await EstudianteUI.init();
 
       // Perfil
       document.getElementById('perfilInfo').innerHTML = `
@@ -304,12 +313,6 @@
         <p><strong>Rol:</strong> ${sesion.rol}</p>
       `;
     });
-
-    /* Utilidades de modales */
-    function abrirModal(id) { document.getElementById(id).classList.add('activo'); }
-    function cerrarModal(id) { document.getElementById(id).classList.remove('activo'); }
-    window.abrirModal = abrirModal;
-    window.cerrarModal = cerrarModal;
   </script>
 </body>
 </html>
