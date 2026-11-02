@@ -787,13 +787,11 @@
    RESPONSIVE — Sección "Sobre Nosotros"
    ============================================ */
 
-/* Tablets y pantallas medianas (hasta 900px) */
 @media (max-width: 900px) {
 
-  /* Contenedor general de la sección */
   .seccion--nosotros {
     padding: var(--esp-lg) 0;
-    overflow-x: hidden; /* evita scroll lateral por decoraciones */
+    overflow-x: hidden;
   }
 
   .nosotros-grid {
@@ -801,7 +799,7 @@
     gap: var(--esp-lg);
   }
 
-  /* Imagen arriba, tamaño controlado */
+  /* Imagen arriba, apaisada y contenida */
   .nosotros-imagenes {
     padding: 0;
     order: -1;
@@ -811,15 +809,28 @@
   }
 
   .nosotros-imagenes::before {
-    display: none; /* se oculta el cuadro decorativo en móvil */
+    display: none;
   }
 
   .nosotros-img-wrapper {
-    aspect-ratio: 16/10; /* apaisada, no vertical */
+    aspect-ratio: 16/10;
     border-radius: var(--radio-md);
   }
 
-  /* Texto más contenido */
+  /* Asegurar que el texto NUNCA se corte */
+  .nosotros-texto,
+  .nosotros-texto h2,
+  .nosotros-texto p,
+  .nosotros-panel,
+  .nosotros-panel p,
+  .nosotros-panel li {
+    overflow: visible;
+    white-space: normal;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    hyphens: auto;
+  }
+
   .nosotros-texto h2 {
     font-size: clamp(1.4rem, 5vw, 2rem);
     line-height: 1.25;
@@ -829,37 +840,51 @@
     font-size: 0.95rem;
   }
 
-  /* Tabs con scroll horizontal (ideal con 5+) */
+  /* ===== TABS: cuadrícula, todos visibles sin scroll ===== */
   .nosotros-tabs {
-    display: flex;
-    flex-wrap: nowrap;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
-    gap: 0.25rem;
-    padding-bottom: 0.5rem;
-  }
-
-  .nosotros-tabs::-webkit-scrollbar {
-    display: none; /* oculta la barra visual */
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.4rem;
+    border-bottom: none;
+    overflow: visible;
+    padding: 0;
+    margin-bottom: var(--esp-md);
   }
 
   .nosotros-tab {
-    flex: 0 0 auto;
-    padding: 0.6rem 0.9rem;
-    font-size: 0.85rem;
-    white-space: nowrap;
+    width: 100%;
+    padding: 0.65rem 0.5rem;
+    font-size: 0.8rem;
+    text-align: center;
+    white-space: normal;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    line-height: 1.2;
+    border: 1.5px solid var(--gris-borde);
+    border-radius: var(--radio-sm);
+    border-bottom: 1.5px solid var(--gris-borde);
+    margin-bottom: 0;
+    background: var(--blanco);
+    color: var(--gris-texto);
   }
 
-  /* Paneles de texto más compactos */
+  .nosotros-tab.activo {
+    background: var(--azul-oscuro);
+    color: var(--blanco);
+    border-color: var(--azul-oscuro);
+  }
+
+  /* ===== PANELES: sin altura mínima fija ===== */
   .nosotros-panel {
     min-height: auto;
     font-size: 0.95rem;
+    line-height: 1.6;
   }
 
   .nosotros-panel li {
     font-size: 0.9rem;
     padding-left: 1.5rem;
+    margin-bottom: 0.5rem;
   }
 
   /* Botón "Conoce más" a ancho completo */
@@ -870,32 +895,38 @@
   }
 }
 
-/* Teléfonos (hasta 500px) */
+/* Teléfonos pequeños */
 @media (max-width: 500px) {
 
   .nosotros-texto h2 {
-    font-size: 1.35rem;
+    font-size: 1.3rem;
   }
 
   .nosotros-intro {
     font-size: 0.9rem;
   }
 
+  /* En pantallas muy pequeñas, 1 columna para los tabs */
+  .nosotros-tabs {
+    grid-template-columns: 1fr;
+    gap: 0.35rem;
+  }
+
   .nosotros-tab {
-    font-size: 0.8rem;
-    padding: 0.55rem 0.75rem;
+    font-size: 0.85rem;
+    padding: 0.7rem 0.5rem;
   }
 
   .nosotros-img-wrapper {
-    aspect-ratio: 4/3; /* más cuadrada aún */
+    aspect-ratio: 4/3;
   }
 
   .nosotros-panel {
     font-size: 0.9rem;
-    line-height: 1.6;
+    line-height: 1.55;
   }
 
   .nosotros-panel li {
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.4rem;
   }
 }
