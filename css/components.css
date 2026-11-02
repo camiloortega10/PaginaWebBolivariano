@@ -783,36 +783,119 @@
   font-size: 0.75rem;
 }
 
-/* ---- Responsive ---- */
+/* ============================================
+   RESPONSIVE — Sección "Sobre Nosotros"
+   ============================================ */
+
+/* Tablets y pantallas medianas (hasta 900px) */
 @media (max-width: 900px) {
+
+  /* Contenedor general de la sección */
+  .seccion--nosotros {
+    padding: var(--esp-lg) 0;
+    overflow-x: hidden; /* evita scroll lateral por decoraciones */
+  }
+
   .nosotros-grid {
     grid-template-columns: 1fr;
     gap: var(--esp-lg);
   }
+
+  /* Imagen arriba, tamaño controlado */
   .nosotros-imagenes {
-    padding: var(--esp-md);
+    padding: 0;
     order: -1;
+    max-width: 500px;
+    width: 100%;
+    margin: 0 auto;
   }
+
   .nosotros-imagenes::before {
-    width: 75%;
-    height: 75%;
+    display: none; /* se oculta el cuadro decorativo en móvil */
   }
-  .nosotros-badge {
-    left: var(--esp-md);
-    bottom: var(--esp-md);
+
+  .nosotros-img-wrapper {
+    aspect-ratio: 16/10; /* apaisada, no vertical */
+    border-radius: var(--radio-md);
+  }
+
+  /* Texto más contenido */
+  .nosotros-texto h2 {
+    font-size: clamp(1.4rem, 5vw, 2rem);
+    line-height: 1.25;
+  }
+
+  .nosotros-intro {
+    font-size: 0.95rem;
+  }
+
+  /* Tabs con scroll horizontal (ideal con 5+) */
+  .nosotros-tabs {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    gap: 0.25rem;
+    padding-bottom: 0.5rem;
+  }
+
+  .nosotros-tabs::-webkit-scrollbar {
+    display: none; /* oculta la barra visual */
+  }
+
+  .nosotros-tab {
+    flex: 0 0 auto;
+    padding: 0.6rem 0.9rem;
+    font-size: 0.85rem;
+    white-space: nowrap;
+  }
+
+  /* Paneles de texto más compactos */
+  .nosotros-panel {
+    min-height: auto;
+    font-size: 0.95rem;
+  }
+
+  .nosotros-panel li {
+    font-size: 0.9rem;
+    padding-left: 1.5rem;
+  }
+
+  /* Botón "Conoce más" a ancho completo */
+  .nosotros-texto > .btn {
+    width: 100%;
+    justify-content: center;
+    margin-top: 1rem;
   }
 }
 
+/* Teléfonos (hasta 500px) */
 @media (max-width: 500px) {
-  .nosotros-stats {
-    grid-template-columns: 1fr 1fr;
-    gap: var(--esp-sm);
+
+  .nosotros-texto h2 {
+    font-size: 1.35rem;
   }
-  .stat-item strong { font-size: 1.6rem; }
-  .nosotros-badge {
-    padding: var(--esp-sm) var(--esp-md);
-    left: var(--esp-sm);
-    right: var(--esp-sm);
+
+  .nosotros-intro {
+    font-size: 0.9rem;
   }
-  .nosotros-badge__icono { font-size: 1.5rem; }
+
+  .nosotros-tab {
+    font-size: 0.8rem;
+    padding: 0.55rem 0.75rem;
+  }
+
+  .nosotros-img-wrapper {
+    aspect-ratio: 4/3; /* más cuadrada aún */
+  }
+
+  .nosotros-panel {
+    font-size: 0.9rem;
+    line-height: 1.6;
+  }
+
+  .nosotros-panel li {
+    margin-bottom: 0.5rem;
+  }
 }
