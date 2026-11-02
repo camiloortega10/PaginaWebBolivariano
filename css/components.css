@@ -791,24 +791,27 @@
 
   .seccion--nosotros {
     padding: var(--esp-lg) 0;
-    overflow-x: clip; /* clip no rompe sticky como hidden */
+    overflow-x: hidden;
   }
 
-  .nosotros-grid {
-    grid-template-columns: minmax(0, 1fr); /* columna única que puede encoger */
-    gap: var(--esp-lg);
-  }
+ .nosotros-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+  gap: var(--esp-xl);
+  align-items: center;
+}
 
-  .nosotros-grid > * {
-    min-width: 0; /* permite encoger */
-    max-width: 100%; /* nunca más ancho que el contenedor */
-  }
+/* CRÍTICO: permitir que los hijos del grid se achiquen */
+.nosotros-grid > * {
+  min-width: 0;
+}
 
+  /* Imagen arriba, apaisada y contenida */
   .nosotros-imagenes {
     padding: 0;
     order: -1;
-    width: 100%;
     max-width: 500px;
+    width: 100%;
     margin: 0 auto;
   }
 
@@ -821,14 +824,18 @@
     border-radius: var(--radio-md);
   }
 
-  /* ===== Texto: forzar wrap en TODOS los elementos ===== */
+  /* Asegurar que el texto NUNCA se corte */
   .nosotros-texto,
-  .nosotros-texto * {
-    overflow-wrap: anywhere; /* rompe palabras largas si hace falta */
-    word-break: break-word;
+  .nosotros-texto h2,
+  .nosotros-texto p,
+  .nosotros-panel,
+  .nosotros-panel p,
+  .nosotros-panel li {
+    overflow: visible;
     white-space: normal;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
     hyphens: auto;
-    max-width: 100%;
   }
 
   .nosotros-texto h2 {
@@ -840,30 +847,29 @@
     font-size: 0.95rem;
   }
 
-  /* ===== Tabs: cuadrícula sin scroll ===== */
+  /* ===== TABS: cuadrícula, todos visibles sin scroll ===== */
   .nosotros-tabs {
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(2, 1fr);
     gap: 0.4rem;
     border-bottom: none;
     overflow: visible;
     padding: 0;
     margin-bottom: var(--esp-md);
-    width: 100%;
   }
 
   .nosotros-tab {
     width: 100%;
-    min-width: 0;
     padding: 0.65rem 0.5rem;
     font-size: 0.8rem;
     text-align: center;
     white-space: normal;
-    overflow-wrap: anywhere;
-    word-break: break-word;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
     line-height: 1.2;
     border: 1.5px solid var(--gris-borde);
     border-radius: var(--radio-sm);
+    border-bottom: 1.5px solid var(--gris-borde);
     margin-bottom: 0;
     background: var(--blanco);
     color: var(--gris-texto);
@@ -875,12 +881,11 @@
     border-color: var(--azul-oscuro);
   }
 
-  /* ===== Paneles: sin altura mínima y con wrap ===== */
+  /* ===== PANELES: sin altura mínima fija ===== */
   .nosotros-panel {
     min-height: auto;
     font-size: 0.95rem;
     line-height: 1.6;
-    max-width: 100%;
   }
 
   .nosotros-panel li {
@@ -889,6 +894,7 @@
     margin-bottom: 0.5rem;
   }
 
+  /* Botón "Conoce más" a ancho completo */
   .nosotros-texto > .btn {
     width: 100%;
     justify-content: center;
@@ -896,6 +902,7 @@
   }
 }
 
+/* Teléfonos pequeños */
 @media (max-width: 500px) {
 
   .nosotros-texto h2 {
@@ -906,8 +913,9 @@
     font-size: 0.9rem;
   }
 
+  /* En pantallas muy pequeñas, 1 columna para los tabs */
   .nosotros-tabs {
-    grid-template-columns: minmax(0, 1fr);
+    grid-template-columns: 1fr;
     gap: 0.35rem;
   }
 
@@ -923,5 +931,9 @@
   .nosotros-panel {
     font-size: 0.9rem;
     line-height: 1.55;
+  }
+
+  .nosotros-panel li {
+    margin-bottom: 0.4rem;
   }
 }
