@@ -785,155 +785,151 @@
 
 /* ============================================
    RESPONSIVE — Sección "Sobre Nosotros"
+   Apilado desde 1024px para cubrir tablets
+   y "vista de escritorio" en móviles.
    ============================================ */
 
-@media (max-width: 900px) {
+@media (max-width: 1024px) {
 
   .seccion--nosotros {
-    padding: var(--esp-lg) 0;
-    overflow-x: hidden;
+    padding: var(--esp-lg) 0 !important;
+    overflow-x: hidden !important;
   }
 
- .nosotros-grid {
-  display: grid;
-  grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
-  gap: var(--esp-xl);
-  align-items: center;
-}
+  /* FORZAR 1 sola columna */
+  .nosotros-grid {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: var(--esp-lg) !important;
+    align-items: stretch !important;
+  }
 
-/* CRÍTICO: permitir que los hijos del grid se achiquen */
-.nosotros-grid > * {
-  min-width: 0;
-}
+  .nosotros-grid > * {
+    min-width: 0 !important;
+    max-width: 100% !important;
+    width: 100% !important;
+  }
 
-  /* Imagen arriba, apaisada y contenida */
+  /* IMAGEN arriba, contenida, centrada */
   .nosotros-imagenes {
-    padding: 0;
-    order: -1;
-    max-width: 500px;
-    width: 100%;
-    margin: 0 auto;
+    padding: 0 !important;
+    order: -1 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 auto !important;
   }
 
   .nosotros-imagenes::before {
-    display: none;
+    display: none !important;
   }
 
   .nosotros-img-wrapper {
-    aspect-ratio: 16/10;
-    border-radius: var(--radio-md);
+    aspect-ratio: 16/10 !important;
+    border-radius: var(--radio-md) !important;
+    width: 100% !important;
   }
 
-  /* Asegurar que el texto NUNCA se corte */
+  /* TEXTO: forzar wrap y que no se desborde */
   .nosotros-texto,
   .nosotros-texto h2,
   .nosotros-texto p,
-  .nosotros-panel,
-  .nosotros-panel p,
-  .nosotros-panel li {
-    overflow: visible;
-    white-space: normal;
-    word-wrap: break-word;
-    overflow-wrap: break-word;
-    hyphens: auto;
+  .nosotros-texto * {
+    overflow-wrap: anywhere !important;
+    word-break: break-word !important;
+    white-space: normal !important;
+    max-width: 100% !important;
+    text-align: left !important;
   }
 
   .nosotros-texto h2 {
-    font-size: clamp(1.4rem, 5vw, 2rem);
-    line-height: 1.25;
+    font-size: clamp(1.3rem, 5vw, 2rem) !important;
+    line-height: 1.25 !important;
   }
 
   .nosotros-intro {
-    font-size: 0.95rem;
+    font-size: 0.95rem !important;
   }
 
-  /* ===== TABS: cuadrícula, todos visibles sin scroll ===== */
+  /* TABS en cuadrícula */
   .nosotros-tabs {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 0.4rem;
-    border-bottom: none;
-    overflow: visible;
-    padding: 0;
-    margin-bottom: var(--esp-md);
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 0.4rem !important;
+    border-bottom: none !important;
+    overflow: visible !important;
+    width: 100% !important;
+    margin-bottom: var(--esp-md) !important;
   }
 
   .nosotros-tab {
-    width: 100%;
-    padding: 0.65rem 0.5rem;
-    font-size: 0.8rem;
-    text-align: center;
-    white-space: normal;
-    word-wrap: break-word;
-    overflow-wrap: break-word;
-    line-height: 1.2;
-    border: 1.5px solid var(--gris-borde);
-    border-radius: var(--radio-sm);
-    border-bottom: 1.5px solid var(--gris-borde);
-    margin-bottom: 0;
-    background: var(--blanco);
-    color: var(--gris-texto);
+    width: 100% !important;
+    min-width: 0 !important;
+    padding: 0.65rem 0.5rem !important;
+    font-size: 0.8rem !important;
+    text-align: center !important;
+    white-space: normal !important;
+    overflow-wrap: anywhere !important;
+    line-height: 1.2 !important;
+    border: 1.5px solid var(--gris-borde) !important;
+    border-radius: var(--radio-sm) !important;
+    background: var(--blanco) !important;
+    color: var(--gris-texto) !important;
+    margin: 0 !important;
   }
 
   .nosotros-tab.activo {
-    background: var(--azul-oscuro);
-    color: var(--blanco);
-    border-color: var(--azul-oscuro);
+    background: var(--azul-oscuro) !important;
+    color: var(--blanco) !important;
+    border-color: var(--azul-oscuro) !important;
   }
 
-  /* ===== PANELES: sin altura mínima fija ===== */
   .nosotros-panel {
-    min-height: auto;
-    font-size: 0.95rem;
-    line-height: 1.6;
+    min-height: auto !important;
+    font-size: 0.95rem !important;
+    line-height: 1.6 !important;
+    max-width: 100% !important;
   }
 
   .nosotros-panel li {
-    font-size: 0.9rem;
-    padding-left: 1.5rem;
-    margin-bottom: 0.5rem;
+    font-size: 0.9rem !important;
+    padding-left: 1.5rem !important;
+    margin-bottom: 0.5rem !important;
   }
 
-  /* Botón "Conoce más" a ancho completo */
   .nosotros-texto > .btn {
-    width: 100%;
-    justify-content: center;
-    margin-top: 1rem;
+    width: 100% !important;
+    justify-content: center !important;
+    margin-top: 1rem !important;
   }
 }
 
-/* Teléfonos pequeños */
-@media (max-width: 500px) {
+/* Teléfonos: tabs en 1 columna */
+@media (max-width: 600px) {
 
-  .nosotros-texto h2 {
-    font-size: 1.3rem;
-  }
-
-  .nosotros-intro {
-    font-size: 0.9rem;
-  }
-
-  /* En pantallas muy pequeñas, 1 columna para los tabs */
   .nosotros-tabs {
-    grid-template-columns: 1fr;
-    gap: 0.35rem;
+    grid-template-columns: 1fr !important;
+    gap: 0.35rem !important;
   }
 
   .nosotros-tab {
-    font-size: 0.85rem;
-    padding: 0.7rem 0.5rem;
+    font-size: 0.85rem !important;
+    padding: 0.7rem 0.5rem !important;
   }
 
   .nosotros-img-wrapper {
-    aspect-ratio: 4/3;
+    aspect-ratio: 4/3 !important;
+  }
+
+  .nosotros-texto h2 {
+    font-size: 1.3rem !important;
+  }
+
+  .nosotros-intro {
+    font-size: 0.9rem !important;
   }
 
   .nosotros-panel {
-    font-size: 0.9rem;
-    line-height: 1.55;
-  }
-
-  .nosotros-panel li {
-    margin-bottom: 0.4rem;
+    font-size: 0.9rem !important;
+    line-height: 1.55 !important;
   }
 }
