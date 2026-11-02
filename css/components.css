@@ -794,10 +794,17 @@
     overflow-x: hidden;
   }
 
-  .nosotros-grid {
-    grid-template-columns: 1fr;
-    gap: var(--esp-lg);
-  }
+ .nosotros-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+  gap: var(--esp-xl);
+  align-items: center;
+}
+
+/* CRÍTICO: permitir que los hijos del grid se achiquen */
+.nosotros-grid > * {
+  min-width: 0;
+}
 
   /* Imagen arriba, apaisada y contenida */
   .nosotros-imagenes {
